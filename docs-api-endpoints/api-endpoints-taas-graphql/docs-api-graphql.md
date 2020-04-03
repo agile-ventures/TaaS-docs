@@ -19,7 +19,7 @@ Your TaaS GraphQL API endpoint key
 
 {% api-method-body-parameters %}
 {% api-method-parameter name="" type="object" required=true %}
-`GraphQL query`
+`GraphQL query object`
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
