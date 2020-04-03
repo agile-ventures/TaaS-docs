@@ -12,14 +12,16 @@ In order to query  the `/graphql` endpoint you need to provide `X-TaaS-Key` in t
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-headers %}
-{% api-method-parameter name="Content-Type" type="string" required=true %}
-application/json
-{% endapi-method-parameter %}
-
 {% api-method-parameter name="X-TaaS-Key" type="string" required=true %}
 Your TaaS GraphQL API endpoint key
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
+
+{% api-method-body-parameters %}
+{% api-method-parameter name="" type="object" required=true %}
+`GraphQL query`
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
