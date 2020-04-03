@@ -26,7 +26,7 @@ Example of the `docker run` command
 Do not forget to change the **Tezos:NodeUrl** based on your configuration!
 {% endhint %}
 
-```text
+```bash
 docker run --rm -it -p 80:80 \
 --env Tezos:NodeUrl="http://172.17.0.1:8732" \
 tezoslive/agileventurestezpusherweb
