@@ -18,7 +18,7 @@ Public GraphQL API endpoints are currently limited to
 {% endhint %}
 
 {% hint style="success" %}
-Be sure to try out GraphQL playground available at [https://www.tezoslive.io/graphql](https://www.tezoslive.io/graphql)
+Be sure to try our GraphQL playground available at [https://www.tezoslive.io/graphql](https://www.tezoslive.io/graphql)
 {% endhint %}
 
 {% hint style="info" %}
