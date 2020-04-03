@@ -17,3 +17,17 @@ Public GraphQL API endpoints are currently limited to
 * 10 requests per minute
 {% endhint %}
 
+{% hint style="info" %}
+If you receive a response from your TaaS GraphQL endpoint with 
+
+**`HTTP 429 status code`**
+
+```text
+Status Code: 429
+Retry-After: 58
+Content: API calls quota exceeded! maximum admitted 10 per 1m.
+```
+
+it means you are currently hitting the limits.
+{% endhint %}
+
