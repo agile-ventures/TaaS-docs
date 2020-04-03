@@ -36,6 +36,7 @@
 ## External Links <a id="docs-external-links"></a>
 
 * [TezosLive.io](https://www.tezoslive.io)
-* [GitHub](https://github.com/agile-ventures/TaaS)
+* [GitHub TaaS WebSocket](https://github.com/agile-ventures/TaaS)
+* [GitHub TaaS GraphQL](https://github.com/agile-ventures/TaaS-GraphQL)
 * [Medium](https://medium.com/tezoslive)
 
