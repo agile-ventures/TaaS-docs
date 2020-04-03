@@ -48,5 +48,11 @@ tezoslive/taas-graphql
 * `GRAPHQL_ENABLE_PLAYGROUND` configuration for the GraphQL playground
 * `GRAPHQL_ENABLE_INTROSPECTION` configuration for the GraphQL introspection
 
+### Testing your GraphQL API endpoint
+
+If you have used default port number \(3000\) and exposed the port using `docker run` command mentioned above you should be able to access the following URL in the browser \(with enabled `GRAPHQL_ENABLE_PLAYGROUND`\). 
+
+{% embed url="http://127.0.0.1:3000/graphql" caption="Your localhost running Docker" %}
+
 
 
