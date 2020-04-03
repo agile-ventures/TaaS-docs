@@ -73,7 +73,7 @@ Content: API calls quota exceeded! maximum admitted 10 per 1m.
 {% endapi-method %}
 
 {% hint style="info" %}
-Example of the GraphQL query object
+Example of the `GraphQL query object`
 {% endhint %}
 
 ```graphql
