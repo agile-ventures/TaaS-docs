@@ -4,7 +4,9 @@ description: GraphQL API interface to Tezos Node RPC API
 
 # TaaS GraphQL
 
-
+**Sign in using your GitHub account on** [**TezosLive.io**](https://www.tezoslive.io) **and create your endpoint.**   
+  
+You don't need to setup or host any server-side or Tezos infrastructure on your side. 
 
 {% hint style="danger" %}
 **Limitations**

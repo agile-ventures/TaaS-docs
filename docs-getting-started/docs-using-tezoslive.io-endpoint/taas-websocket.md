@@ -4,7 +4,11 @@ description: WebSocket / SignalR endpoint providing real-time updates
 
 # TaaS WebSocket
 
-You can also the [Medium article ](https://medium.com/tezoslive/public-tezos-signalr-websocket-endpoint-available-on-tezoslive-io-28e0dcfcc8f)about the TaaS public endpoints.
+**Sign in using your GitHub account on** [**TezosLive.io**](https://www.tezoslive.io) **and create your endpoint.**   
+  
+You don't need to setup or host any server-side or Tezos infrastructure on your side. 
+
+You can also read the [Medium article ](https://medium.com/tezoslive/public-tezos-signalr-websocket-endpoint-available-on-tezoslive-io-28e0dcfcc8f)about the TaaS public endpoint.
 
 {% hint style="danger" %}
 **Limitations**
