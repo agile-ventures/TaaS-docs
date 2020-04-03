@@ -12,6 +12,10 @@ In order to query  the `/graphql` endpoint you need to provide `X-TaaS-Key` in t
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-headers %}
+{% api-method-parameter name="Content-Type" type="string" required=true %}
+application/json
+{% endapi-method-parameter %}
+
 {% api-method-parameter name="X-TaaS-Key" type="string" required=true %}
 Your TaaS GraphQL API endpoint key
 {% endapi-method-parameter %}
@@ -38,6 +42,16 @@ GraphQL JSON response based on your query
     }
   }
 }
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=401 %}
+{% api-method-response-example-description %}
+The API key provided in the `X-TaaS-Key` header is not valid, or the header is not provided.
+{% endapi-method-response-example-description %}
+
+```
+Unauthorized
 ```
 {% endapi-method-response-example %}
 
