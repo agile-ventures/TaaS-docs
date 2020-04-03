@@ -17,6 +17,10 @@ Public GraphQL API endpoints are currently limited to
 * 10 requests per minute
 {% endhint %}
 
+{% hint style="success" %}
+Be sure to try our GraphQL playground available at [https://www.tezoslive.io/playground](https://www.tezoslive.io/playground)
+{% endhint %}
+
 {% hint style="info" %}
 If you receive a response from your TaaS GraphQL endpoint with 
 

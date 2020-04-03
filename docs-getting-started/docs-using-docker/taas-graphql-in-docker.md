@@ -54,5 +54,7 @@ If you have used default port number \(3000\) and exposed the port using `docker
 
 {% embed url="http://127.0.0.1:3000/graphql" caption="Your localhost running Docker" %}
 
+### GraphQL Schema
 
+Current version of the schema is available 
 
