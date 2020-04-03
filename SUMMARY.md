@@ -8,7 +8,9 @@
 * [Using TezosLive.io Endpoints](docs-getting-started/docs-using-tezoslive.io-endpoint/README.md)
   * [TaaS WebSocket](docs-getting-started/docs-using-tezoslive.io-endpoint/taas-websocket.md)
   * [TaaS GraphQL](docs-getting-started/docs-using-tezoslive.io-endpoint/taas-graphql.md)
-* [Using Docker](docs-getting-started/docs-using-docker.md)
+* [Using Docker](docs-getting-started/docs-using-docker/README.md)
+  * [TaaS WebSocket in Docker](docs-getting-started/docs-using-docker/taas-websocket-in-docker.md)
+  * [TaaS GraphQL in Docker](docs-getting-started/docs-using-docker/taas-graphql-in-docker.md)
 * [Using Docker with Azure Functions and SignalR Service](docs-getting-started/docs-using-docker-and-serveless.md)
 
 ## subscribing from clients <a id="docs-clients"></a>

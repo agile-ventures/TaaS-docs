@@ -21,7 +21,7 @@ description: >-
 In this configuration we are using a different docker image - this one is only sending a new blocks to our Azure Function, which then sends parsed information to subscribers through Azure SignalR Service.
 
 {% hint style="info" %}
-If you just want to use a Docker container without having to setup Azure infrastructure please check [Using Docker](docs-using-docker.md) documentation section.
+If you just want to use a Docker container without having to setup Azure infrastructure please check [Using Docker](docs-using-docker/) documentation section.
 {% endhint %}
 
 Ready-to-use docker image is available from Docker Hub here:   
