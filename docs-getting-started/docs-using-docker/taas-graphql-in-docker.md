@@ -56,5 +56,7 @@ If you have used default port number \(3000\) and exposed the port using `docker
 
 ### GraphQL Schema
 
-Current version of the schema is available 
+> [https://github.com/agile-ventures/TaaS-GraphQL/blob/master/src/schema/schema.graphql](https://github.com/agile-ventures/TaaS-GraphQL/blob/master/src/schema/schema.graphql)
+
+
 
