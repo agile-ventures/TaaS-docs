@@ -1,7 +1,7 @@
 ---
 description: >-
   If you want to use Serverless Azure Functions and Azure SignalR Service with
-  TaaS
+  TaaS WebSocket
 ---
 
 # Using Docker with Azure Functions and SignalR Service
