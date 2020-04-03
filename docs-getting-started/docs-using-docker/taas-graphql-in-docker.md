@@ -14,7 +14,7 @@ Ready-to-use docker image is available from Docker Hub here: [https://hub.docker
 Example of the `docker run` command
 
 * exposing port 3000
-* setting the Tezos:NodeUrl environment variable to [http://172.17.0.1:8732](http://172.17.0.1:8732)
+* setting the Tezos:NodeUrl environment variable to [https://api.tezos.org.ua](https://api.tezos.org.ua)
 
 {% hint style="warning" %}
 Do not forget to change the **Tezos:NodeUrl** based on your configuration!
@@ -22,7 +22,7 @@ Do not forget to change the **Tezos:NodeUrl** based on your configuration!
 
 ```bash
 docker run --rm -it -p 3000:3000 \
---env TEZOS_NODE="http://172.17.0.1:8732" \
+--env TEZOS_NODE="https://api.tezos.org.ua" \
 tezoslive/taas-graphql
 ```
 
@@ -35,7 +35,7 @@ By providing the following ENV variables you can override default configuration.
 ```bash
 docker run --rm -it -p 3000:3000 \
 --env PORT="3000" \
---env TEZOS_NODE="http://172.17.0.1:8732" \
+--env TEZOS_NODE="https://api.tezos.org.ua" \
 --env MAX_BLOCKS="5" \
 --env GRAPHQL_ENABLE_PLAYGROUND="true" \
 --env GRAPHQL_ENABLE_INTROSPECTION="true" \
