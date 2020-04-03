@@ -11,7 +11,7 @@ Or you can check out deployed version of this app available at [https://client-s
 
 ### 1. Getting the url and accessToken from the /api/negotiate
 
-{% page-ref page="../docs-api-endpoints/docs-negotiate.md" %}
+{% page-ref page="../docs-api-endpoints/api-endpoints-taas-websocket/docs-api-negotiate.md" %}
 
 ### 2. Connecting to the SignalR Hub
 
@@ -39,11 +39,11 @@ You can also check our Sample Client [source code](https://github.com/agile-vent
 
 ### 3. Subscribing to updates
 
-{% page-ref page="../docs-api-endpoints/docs-api-subscribe.md" %}
+{% page-ref page="../docs-api-endpoints/api-endpoints-taas-websocket/docs-api-subscribe.md" %}
 
 ### 4. Unsubscribe from updates
 
-{% page-ref page="../docs-api-endpoints/docs-api-unsubscribe.md" %}
+{% page-ref page="../docs-api-endpoints/api-endpoints-taas-websocket/docs-api-unsubscribe.md" %}
 
 ### 
 

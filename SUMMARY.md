@@ -21,9 +21,12 @@
 
 ## API Endpoints <a id="docs-api-endpoints"></a>
 
-* [/api/negotiate](docs-api-endpoints/docs-negotiate.md)
-* [/api/subscribe](docs-api-endpoints/docs-api-subscribe.md)
-* [/api/unsubscribe](docs-api-endpoints/docs-api-unsubscribe.md)
+* [TaaS WebSocket](docs-api-endpoints/api-endpoints-taas-websocket/README.md)
+  * [/api/negotiate](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-negotiate.md)
+  * [/api/subscribe](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-subscribe.md)
+  * [/api/unsubscribe](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-unsubscribe.md)
+* [TaaS GraphQL](docs-api-endpoints/api-endpoints-taas-graphql/README.md)
+  * [/graphql](docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md)
 
 ## Sample Clients <a id="docs-sample-clients"></a>
 

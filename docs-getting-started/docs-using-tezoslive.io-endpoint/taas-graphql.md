@@ -18,7 +18,7 @@ Public GraphQL API endpoints are currently limited to
 {% endhint %}
 
 {% hint style="success" %}
-Be sure to try our GraphQL playground available at [https://www.tezoslive.io/graphql](https://www.tezoslive.io/graphql)
+Be sure to try out GraphQL playground available at [https://www.tezoslive.io/graphql](https://www.tezoslive.io/graphql)
 {% endhint %}
 
 {% hint style="info" %}
@@ -32,6 +32,6 @@ Retry-After: 58
 Content: API calls quota exceeded! maximum admitted 10 per 1m.
 ```
 
-it means you are currently hitting the limits.
+it means you are currently hitting the request rate limits.
 {% endhint %}
 
