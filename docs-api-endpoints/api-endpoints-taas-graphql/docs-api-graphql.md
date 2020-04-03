@@ -6,7 +6,7 @@ graphql
 {% endapi-method-summary %}
 
 {% api-method-description %}
-In order to query  the `/graphql` endpoint you need to provide `X-TaaS-Key` in the request.
+In order to query  the `/graphql` endpoint you need to provide `X-TaaS-Key` in the request. You also need to provide your GraphQL query in the request body.
 {% endapi-method-description %}
 
 {% api-method-spec %}
@@ -71,4 +71,22 @@ Content: API calls quota exceeded! maximum admitted 10 per 1m.
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+{% hint style="info" %}
+Example of the GraphQL query
+{% endhint %}
+
+```graphql
+{
+  block(block: "884753") {
+    protocol
+    chain_id
+    hash
+    header {
+      level
+      timestamp
+    }
+  }
+}
+```
 
