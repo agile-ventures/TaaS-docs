@@ -84,7 +84,7 @@ If you need more complex solution, like JWT token authentication, rate limiting 
 * [https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)
 * [https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
 
-One possible scenario deployed on VMs or dedicated servers could be to have HAProxy load balancer configure with JWT authentication.
+One possible scenario if you opt out to have TaaS deployed on VMs or dedicated servers could be to have HAProxy load balancer configure with JWT authentication running in from of the TaaS docker containers.
 
   
 There are multiple options in case you will opt out to host your TaaS GraphQL stack in the cloud running in the serverless mode \(AWS Lambda, Azure Functions, Cloudflare Workers, etc.\) and the best solution will depend on your specific cloud provider.
