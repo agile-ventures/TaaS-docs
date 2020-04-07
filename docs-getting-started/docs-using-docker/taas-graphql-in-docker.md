@@ -9,7 +9,9 @@
 * Tezos Node with enabled RPC endpoint supporting read-only calls
 {% endhint %}
 
-Ready-to-use docker image is available from Docker Hub here: [https://hub.docker.com/r/tezoslive/taas-graphql](https://hub.docker.com/r/tezoslive/taas-graphql).
+Ready-to-use docker image is available from Docker Hub here: 
+
+\*\*\*\*[**https://hub.docker.com/r/tezoslive/taas-graphql**](https://hub.docker.com/r/tezoslive/taas-graphql)\*\*\*\*
 
 Example of the `docker run` command
 
