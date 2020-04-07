@@ -2,7 +2,7 @@
 
 {% api-method method="post" host="https://www.tezoslive.io" path="/api/graphql" %}
 {% api-method-summary %}
-graphql
+GraphQL
 {% endapi-method-summary %}
 
 {% api-method-description %}
