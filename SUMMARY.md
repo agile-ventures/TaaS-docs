@@ -13,12 +13,6 @@
   * [TaaS GraphQL in Docker](docs-getting-started/docs-using-docker/taas-graphql-in-docker.md)
 * [Using Docker with Azure Functions and SignalR Service](docs-getting-started/docs-using-docker-and-serveless.md)
 
-## subscribing from clients <a id="docs-clients"></a>
-
-* [Clients - TezosLive.io Endpoint or Azure Functions](docs-clients/docs-taas-endpoint-or-function.md)
-* [Clients - Docker](docs-clients/docs-docker.md)
-* [Typescript Definitions](docs-clients/docs-typescript-definition.md)
-
 ## API Endpoints <a id="docs-api-endpoints"></a>
 
 * [TaaS WebSocket](docs-api-endpoints/api-endpoints-taas-websocket/README.md)
@@ -27,6 +21,12 @@
   * [/api/unsubscribe](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-unsubscribe.md)
 * [TaaS GraphQL](docs-api-endpoints/api-endpoints-taas-graphql/README.md)
   * [/graphql](docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md)
+
+## WebSocket - subscribing from clients <a id="docs-clients"></a>
+
+* [Clients - TezosLive.io Endpoint or Azure Functions](docs-clients/docs-taas-endpoint-or-function.md)
+* [Clients - Docker](docs-clients/docs-docker.md)
+* [Typescript Definitions](docs-clients/docs-typescript-definition.md)
 
 ## TaaS WebSocket Sample Clients <a id="docs-sample-clients"></a>
 
