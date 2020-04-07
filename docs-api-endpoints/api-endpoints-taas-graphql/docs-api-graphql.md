@@ -1,6 +1,6 @@
-# /graphql
+# /api/graphql
 
-{% api-method method="post" host="https://www.tezoslive.io" path="/graphql" %}
+{% api-method method="post" host="https://www.tezoslive.io" path="/api/graphql" %}
 {% api-method-summary %}
 graphql
 {% endapi-method-summary %}

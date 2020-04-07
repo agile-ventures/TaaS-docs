@@ -20,7 +20,7 @@
   * [/api/subscribe](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-subscribe.md)
   * [/api/unsubscribe](docs-api-endpoints/api-endpoints-taas-websocket/docs-api-unsubscribe.md)
 * [TaaS GraphQL](docs-api-endpoints/api-endpoints-taas-graphql/README.md)
-  * [/graphql](docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md)
+  * [/api/graphql](docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md)
 
 ## TaaS WebSocket - subscribing from clients <a id="docs-clients"></a>
 
