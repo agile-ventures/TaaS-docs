@@ -46,13 +46,13 @@ docker run --rm -it -p 3000:3000 \
 tezoslive/taas-graphql
 ```
 
-* `PORT` configuration for the port on which NodeJS server listens
-* `TEZOS_NODE` configuration for the Tezos Node RPC API endpoint
-* `MAX_BLOCKS` configuration for the maximum number of blocks that can be fetched using `blocks` GraphQL query
-* `GRAPHQL_ENABLE_PLAYGROUND` configuration for the GraphQL playground
-* `GRAPHQL_ENABLE_INTROSPECTION` configuration for the GraphQL introspection
-* `ENABLE_API_KEY` if enabled API Key is required with each request. API key needs to be provided in the `X-TaaS-Key` header.
-* `API_KEY` configures the API key value.
+* `PORT` configuration for the port on which NodeJS server listens. Default is `3000`. 
+* `TEZOS_NODE` configuration for the Tezos Node RPC API endpoint. Default is [`https://api.tezos.org.ua`](https://api.tezos.org.ua) 
+* `MAX_BLOCKS` configuration for the maximum number of blocks that can be fetched using `blocks` GraphQL query. Default is `5`. 
+* `GRAPHQL_ENABLE_PLAYGROUND` configuration for the GraphQL playground. Default is `true`. It is recommend as best practice to disable this in production environment by Apollo. 
+* `GRAPHQL_ENABLE_INTROSPECTION` configuration for the GraphQL introspection. Default is `true`. It is recommend as best practice to disable this in production environment by Apollo. 
+* `ENABLE_API_KEY` if enabled API Key is required with each request. API key needs to be provided in the `X-TaaS-Key` header. Default is `false`. 
+* `API_KEY` configures the API key value. There is no default value.
 
 ### Testing your GraphQL API endpoint
 
