@@ -22,7 +22,7 @@
 * [TaaS GraphQL](docs-api-endpoints/api-endpoints-taas-graphql/README.md)
   * [/graphql](docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md)
 
-## WebSocket - subscribing from clients <a id="docs-clients"></a>
+## TaaS WebSocket - subscribing from clients <a id="docs-clients"></a>
 
 * [Clients - TezosLive.io Endpoint or Azure Functions](docs-clients/docs-taas-endpoint-or-function.md)
 * [Clients - Docker](docs-clients/docs-docker.md)
