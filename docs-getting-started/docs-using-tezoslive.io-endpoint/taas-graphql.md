@@ -17,6 +17,10 @@ Public GraphQL API endpoints are currently limited to
 * 10 requests per minute
 {% endhint %}
 
+For more information querying the TezosLive.io GraphQL endpoint take a look here:
+
+{% page-ref page="../../docs-api-endpoints/api-endpoints-taas-graphql/docs-api-graphql.md" %}
+
 {% hint style="success" %}
 Be sure to try out GraphQL playground available at [https://www.tezoslive.io/graphql](https://www.tezoslive.io/graphql)
 {% endhint %}
