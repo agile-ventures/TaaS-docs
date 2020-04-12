@@ -47,6 +47,8 @@ By providing ENV variable **Logging:LogLevel:Default** you can configure logging
 
 **For client side instructions** please see
 
+{% page-ref page="../../docs-clients/docs-docker.md" %}
+
 ### Configure SSL/TLS for Your TaaS Docker Image
 
 {% hint style="warning" %}
