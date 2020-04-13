@@ -7,13 +7,13 @@ GraphQL
 
 {% api-method-description %}
 In order to query  the `/api/graphql` endpoint you need to provide   
-`x-taas-key` in the request. You also need to provide your GraphQL query in the request body.
+`X-TaaS-Key` in the request. You also need to provide your GraphQL query in the request body.
 {% endapi-method-description %}
 
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-headers %}
-{% api-method-parameter name="x-taas-key" type="string" required=true %}
+{% api-method-parameter name="X-TaaS-Key" type="string" required=true %}
 Your TaaS GraphQL API endpoint key
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
