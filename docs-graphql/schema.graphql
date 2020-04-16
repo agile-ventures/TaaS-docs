@@ -1,0 +1,584 @@
+# Tezos address, represented as tz1, tz2, tz3 or KT1 prefixed String.
+scalar Address
+
+# Timestamp specified as a ISO-8601 UTC date string (2020-02-04T15:31:39Z)
+scalar DateTime
+
+# JSON represents any valid JSON object
+scalar JSON
+
+# Raw Michelson expression represented as JSON
+scalar MichelsonExpression
+
+# Arbitrary precision number represented as string in JSON.
+scalar BigNumber
+
+schema {
+    query: Query
+}
+
+type Query {
+    # Block fetches a Tezos block by number, hash or relative pointer (head~n).
+    # If neither is supplied, the most recent known block (head) is returned.
+    block(block: String): Block
+
+    # Blocks returns all blocks in a given interval, but maximum of <count> elements.
+    # Hash, level, 'head' and 'head~n' notations are allowed.
+    # 
+    # Example queries:
+    # blocks(from: "head~4") {...}  # return last 5 blocks
+    # blocks(count: 5) {...}  # return last 5 blocks
+    # blocks(from: "head~9", count: 5) {...}  # five blocks before them
+    # blocks(to: "<somehash>", count: 5) {...}  # return 5 blocks before and including <somehash>
+    # blocks(from: "<somehash>", count: 5) {...}  # return 5 blocks since and including <somehash>
+    blocks(from: String, to: String, count: Int): [Block!]!
+}
+
+# Tezos block
+type Block {
+    protocol: String!
+    chain_id: String!
+    hash: String!
+    header: BlockHeader!
+    metadata: BlockMetadata!
+
+    # Returns the delegate with the given address, or null
+    delegate(address: Address): Delegate
+
+    # Returns the constants
+    constants: Constants
+
+    # Returns the contract with the given address, or null
+    contract(address: Address): Contract
+
+    # Returns the operation entry with the given hash, or null
+    operation(hash: String!): OperationEntry
+
+    # All operations in this block as returned from the Tezos node
+    operations: [[OperationEntry]]
+
+    # Returns activations from block. Results can be filtered by operation hash, or address (pkh)
+    activations(hash: String, address: Address): [ActivateAccount!]!
+
+    # Returns ballots from block. Results can be filtered by operation hash, source, proposal or vote (ballot).
+    ballots(hash: String, source: Address, proposal: String, ballot: BallotVote): [Ballot!]!
+
+    # Returns delegations from block. Results can be filtered by operation hash, source, delegate or operation result status.
+    delegations(hash: String, source: Address, delegate: Address, status: OperationResultStatus): [Delegation!]!
+
+    # Returns double baking evidence from block. Results can be filtered by operation hash or delegate.
+    double_baking_evidence(hash: String, delegate: Address): [DoubleBakingEvidence!]!
+
+    # Returns double endorsement evidence from block. Results can be filtered by operation hash or delegate.
+    double_endorsement_evidence(hash: String, delegate: Address): [DoubleEndorsementEvidence!]!
+
+    # Returns endorsements from block. Results can be filtered by operation hash, or delegate.
+    endorsements(hash: String, delegate: Address): [Endorsement!]!
+
+    # Returns originations from block. Results can be filtered by
+    # operation hash, source, delegate, originated contract or operation result status.
+    originations(hash: String, source: Address, delegate: Address, originated_contract: Address, status: OperationResultStatus): [Origination!]!
+
+    # Returns proposals from block. Results can be filtered by operation hash, source or proposal hash.
+    proposals(hash: String, source: Address, proposal: String): [Proposals!]!
+
+    # Returns reveals from block. Results can be filtered by operation hash, source or operation result status.
+    reveals(hash: String, source: Address, status: OperationResultStatus): [Reveal!]!
+
+    # Returns seed nonce revelations from block. Results can be filtered by operation hash, source or operation result status.
+    seed_nonce_revelations(hash: String, delegate: Address): [SeedNonceRevelation!]!
+
+    # Returns transactions from block. Results can be filtered by operation hash, source, destination or operation result status.
+    transactions(hash: String, source: Address, destination: Address, status: OperationResultStatus): [Transaction!]!
+}
+
+type BlockHeader {
+    level: Int!
+    proto: Int!
+    predecessor: String!
+    timestamp: DateTime!
+    validation_pass: Int!
+    operations_hash: String
+    fitness: [String!]!
+    context: String!
+    priority: Int!
+    proof_of_work_nonce: String!
+    seed_nonce_hash: String
+    signature: String!
+}
+
+type BlockMetadata {
+    protocol: String!
+    next_protocol: String!
+    test_chain_status: TestChainStatus!
+    max_operations_ttl: Int!
+    max_operation_data_length: Int!
+    max_block_header_length: Int!
+    max_operation_list_length: [MaxOperationListLength!]
+    baker: Address!
+    level: Level!
+    voting_period_kind: String!
+    nonce_hash: String
+    consumed_gas: BigNumber
+    deactivated: [Address!]
+    balance_updates: [BalanceUpdate!]
+}
+
+type Level {
+    level: Int!
+    level_position: Int!
+    cycle: Int!
+    cycle_position: Int!
+    voting_period: Int!
+    voting_period_position: Int!
+    expected_commitment: Boolean!
+}
+
+type TestChainStatus {
+    status: String!
+
+    # Note that Taquito misses other fields available on the RPC
+}
+
+type MaxOperationListLength {
+    max_size: Int!
+    max_op: Int
+}
+
+enum BalanceUpdateKind {
+    CONTRACT
+    FREEZER
+}
+
+enum BalanceUpdateCategory {
+    DEPOSITS
+    FEES
+    REWARDS
+}
+
+type Delegate {
+    balance: BigNumber!
+    frozen_balance: BigNumber!
+    frozen_balance_by_cycle: [FrozenBalanceByCycle!]!
+    staking_balance: BigNumber!
+    delegated_contracts: [String!]!
+    delegated_balance: BigNumber!
+    deactivated: Boolean!
+    grace_period: Int!
+    # Returns baking rights for a delegate or null. Results can be filtered by max_priority, level or cycle. If max_priority parameter is empty, server will default to the ENV value TEZOS_BAKING_RIGHTS_MAX_PRIORITY.
+    baking_rights(max_priority: Int, level: [Int], cycle: [Int]): [BakingRight]
+
+    # Returns endorsing rights for a delegate or null. Results can be filtered by level or cycle.
+    endorsing_rights(level: [Int], cycle: [Int]): [EndorsingRight]
+}
+
+type BakingRight {
+    level: Int!
+    delegate: String!
+    priority: Int!
+    estimated_time: DateTime
+}
+
+type EndorsingRight {
+    level: Int!
+    delegate: String!
+    slots: [Int]!
+    estimated_time: DateTime
+}
+
+type FrozenBalanceByCycle {
+    cycle: Int!
+    deposit: BigNumber!
+    fees: BigNumber!
+    rewards: BigNumber!
+}
+
+type Constants {
+    proof_of_work_nonce_size: Int
+    nonce_length: Int
+    max_revelations_per_block: Int
+    max_operation_data_length: Int
+    max_proposals_per_delegate: Int
+    preserved_cycles: Int
+    blocks_per_cycle: Int
+    blocks_per_commitment: Int
+    blocks_per_roll_snapshot: Int
+    blocks_per_voting_period: Int
+    time_between_blocks: [BigNumber]
+    endorsers_per_block: Int
+    hard_gas_limit_per_operation: BigNumber
+    hard_gas_limit_per_block: BigNumber
+    proof_of_work_threshold: BigNumber
+    tokens_per_roll: BigNumber
+    michelson_maximum_type_size: Int
+    seed_nonce_revelation_tip: BigNumber
+    origination_size: Int
+    block_security_deposit: BigNumber
+    endorsement_security_deposit: BigNumber
+    baking_reward_per_endorsement: [BigNumber]
+    endorsement_reward: [BigNumber]
+    cost_per_byte: BigNumber
+    hard_storage_limit_per_operation: BigNumber
+    test_chain_duration: BigNumber
+    quorum_min: Int
+    quorum_max: Int
+    min_proposal_quorum: Int
+    initial_endorsers: Int
+    delay_per_missing_endorsement: BigNumber
+    # Pre Carthaganet
+    block_reward: BigNumber
+}
+
+type Contract {
+    address: String!
+    balance: BigNumber!
+    script: ScriptedContracts
+    counter: String
+    entrypoints: Entrypoints
+    delegate: String
+    manager_key: ManagerKey
+    storage: MichelsonExpression
+
+    # Decoded version of the storage.
+    storage_decoded: JSON
+
+    # JSON representation of the storage schema.
+    schema: JSON
+
+    # Returns the value stored for a given key in a big map owned by this contract. If a map ID is given, the keyType argument is also required.
+    big_map_value(key: String!, keyType: BigMapKeyType, bigMapId: Int): MichelsonExpression
+
+    # Returns the decoded value stored for a given key in this contract's big map. Note that this is only supported for the contracts originated
+    # with the "one big_map per contract" scheme. Babylon protocol introduced multiple bigmaps per contract, which cannot be accessed using this field.
+    big_map_value_decoded(key: String!): JSON
+}
+
+# One of the currently supported key types used for fetching big_map values.
+enum BigMapKeyType {
+    STRING
+    NAT
+    INT
+    BYTES
+    BOOL
+    MUTEZ
+    ADDRESS
+    KEY_HASH
+}
+
+type ManagerKey {
+    key: String!
+    invalid: Boolean
+}
+
+type Entrypoints {
+    entrypoints: JSON!
+    unreachable: EntrypointUnreachable
+}
+
+type EntrypointUnreachable {
+    path: [String!]!
+}
+
+type ScriptedContracts {
+    code: [MichelsonExpression!]!
+    storage: MichelsonExpression!
+}
+
+type OperationEntry {
+    info: OperationEntryInfo!
+    contents: [OperationContents!]!
+}
+
+type OperationEntryInfo {
+    protocol: String!
+    chain_id: String!
+    hash: String!
+    branch: String!
+    signature: String
+}
+
+interface OperationContents {
+    kind: OperationKind!
+    operation: OperationEntryInfo!
+}
+
+enum OperationKind {
+    ACTIVATE_ACCOUNT
+    BALLOT
+    DELEGATION
+    DOUBLE_BAKING_EVIDENCE
+    DOUBLE_ENDORSEMENT_EVIDENCE
+    ENDORSEMENT
+    ORIGINATION
+    PROPOSALS
+    REVEAL
+    SEED_NONCE_REVELATION
+    TRANSACTION
+}
+
+type Endorsement implements OperationContents {
+    # kind is always 'endorsement'
+    kind: OperationKind!
+    level: Int!
+    metadata: EndorsementMetadata!
+    operation: OperationEntryInfo!
+}
+
+type EndorsementMetadata {
+    balance_updates: [BalanceUpdate!]!
+    delegate: Address!
+    slots: [Int!]!
+}
+
+type SeedNonceRevelation implements OperationContents {
+    # kind is always 'seed_nonce_revelation'
+    kind: OperationKind!
+    level: Int!
+    nonce: String!
+    metadata: OperationContentMetadata!
+    operation: OperationEntryInfo!
+}
+
+type DoubleEndorsementEvidence implements OperationContents {
+    # kind is always 'double_endorsement_evidence'
+    kind: OperationKind!
+    op1: InlinedEndorsement!
+    op2: InlinedEndorsement!
+    metadata: OperationContentMetadata!
+    operation: OperationEntryInfo!
+}
+
+type InlinedEndorsement {
+    branch: String!
+    operations: InlinedEndorsementContents!
+    signature: String
+}
+
+type InlinedEndorsementContents {
+    # kind is always 'endorsement'
+    kind: OperationKind!
+    level: Int!
+}
+
+type OperationContentMetadata {
+    balance_updates: [BalanceUpdate!]!
+}
+
+type DoubleBakingEvidence implements OperationContents {
+    # kind is always 'double_baking_evidence'
+    kind: OperationKind!
+    bh1: BlockHeader!
+    bh2: BlockHeader!
+    metadata: OperationContentMetadata!
+    operation: OperationEntryInfo!
+}
+
+type ActivateAccount implements OperationContents {
+    # kind is always 'activate_account'
+    kind: OperationKind!
+    pkh: String!
+    secret: String!
+    metadata: OperationContentMetadata!
+    operation: OperationEntryInfo!
+}
+
+type Reveal implements OperationContents {
+    # kind is always 'reveal'
+    kind: OperationKind!
+    source: Address!
+    fee: BigNumber!
+    counter: String!
+    gas_limit: BigNumber!
+    storage_limit: BigNumber!
+    public_key: String!
+    metadata: RevealMetadata!
+    operation: OperationEntryInfo!
+}
+
+type RevealMetadata {
+    balance_updates: [BalanceUpdate!]!
+    internal_operation_results: [InternalOperationResult!]
+    operation_result: RevealOperationResult!
+}
+
+type RevealOperationResult implements OperationResult {
+    status: OperationResultStatus!
+    consumed_gas: BigNumber
+    errors: [OperationError!]
+}
+
+type Transaction implements OperationContents {
+    # kind is always 'transaction'
+    kind: OperationKind!
+    source: Address!
+    fee: BigNumber!
+    counter: BigNumber!
+    gas_limit: BigNumber!
+    storage_limit: BigNumber!
+    amount: BigNumber!
+    destination: String!
+    parameters: MichelsonExpression
+    metadata: TransactionMetadata!
+    operation: OperationEntryInfo!
+}
+
+type TransactionMetadata {
+    balance_updates: [BalanceUpdate!]!
+    operation_result: TransactionOperationResult!
+    internal_operation_results: [InternalOperationResult!]
+}
+
+type TransactionOperationResult implements OperationResult {
+    status: OperationResultStatus!
+    consumed_gas: BigNumber
+    errors: [OperationError!]
+    storage: MichelsonExpression
+    big_map_diff: [BigMapDiffItem!]
+    balance_updates: [BalanceUpdate!]
+    originated_contracts: [String!]
+    storage_size: String
+    paid_storage_size_diff: String
+    allocated_destination_contract: Boolean
+}
+
+type BigMapDiffItem {
+    key_hash: String!
+    key: MichelsonExpression!
+    value: MichelsonExpression
+}
+
+type Delegation implements OperationContents {
+    # kind is always 'delegation'
+    kind: OperationKind!
+    source: Address!
+    fee: BigNumber!
+    counter: BigNumber!
+    gas_limit: BigNumber!
+    storage_limit: BigNumber!
+    delegate: Address
+    metadata: DelegationMetadata!
+    operation: OperationEntryInfo!
+}
+
+type DelegationMetadata {
+    balance_updates: [BalanceUpdate!]!
+    operation_result: DelegationOperationResult!
+    internal_operation_results: [InternalOperationResult!]
+}
+
+type DelegationOperationResult implements OperationResult {
+    status: OperationResultStatus!
+    consumed_gas: BigNumber
+    errors: [OperationError!]
+}
+
+type Origination implements OperationContents {
+    # kind is always 'origination'
+    kind: OperationKind!
+    source: Address!
+    fee: BigNumber!
+    counter: BigNumber!
+    gas_limit: BigNumber!
+    storage_limit: BigNumber!
+    balance: BigNumber!
+    delegate: Address
+    script: ScriptedContracts
+    metadata: OriginationMetadata!
+    operation: OperationEntryInfo!
+}
+
+type OriginationMetadata {
+    balance_updates: [BalanceUpdate!]!
+    operation_result: OriginationOperationResult!
+    internal_operation_results: [InternalOperationResult!]
+}
+
+type OriginationOperationResult implements OperationResult {
+    status: OperationResultStatus!
+    consumed_gas: BigNumber
+    errors: [OperationError!]
+    balance_updates: [BalanceUpdate!]
+    originated_contracts: [String!]
+    storage_size: BigNumber
+    paid_storage_size_diff: BigNumber
+}
+
+type Proposals implements OperationContents {
+    # kind is always 'proposals'
+    kind: OperationKind!
+    source: Address!
+    period: Int!
+    proposals: [String!]!
+    metadata: JSON
+    operation: OperationEntryInfo!
+}
+
+type Ballot implements OperationContents {
+    # kind is always 'ballot'
+    kind: OperationKind!
+    source: Address!
+    period: Int!
+    proposal: String!
+    ballot: BallotVote!
+    metadata: JSON
+    operation: OperationEntryInfo!
+}
+
+enum BallotVote {
+    NAY
+    PASS
+    YAY
+}
+
+type BalanceUpdate {
+    kind: BalanceUpdateKind!
+    category: BalanceUpdateCategory
+    contract: String
+    delegate: Address
+    cycle: Int
+    change: BigNumber!
+}
+
+type InternalOperationResult {
+    kind: InternalOperationKind!
+    source: Address!
+    nonce: Int!
+    amount: BigNumber
+    destination: String
+    parameters: TransactionOperationParameter
+    public_key: String
+    balance: BigNumber
+    delegate: Address
+    script: ScriptedContracts
+    result: OperationResult!
+}
+
+enum InternalOperationKind {
+    DELEGATION
+    ORIGINATION
+    REVEAL
+    TRANSACTION
+}
+
+type TransactionOperationParameter {
+    entrypoint: String!
+    value: MichelsonExpression!
+}
+
+interface OperationResult {
+    status: OperationResultStatus!
+    consumed_gas: BigNumber
+    errors: [OperationError!]
+}
+
+enum OperationResultStatus {
+    APPLIED
+    BACKTRACKED
+    FAILED
+    SKIPPED
+}
+
+type OperationError {
+    kind: String!
+    id: String!
+}
