@@ -1,4 +1,4 @@
-# Tezos address, represented as tz1, tz2, tz3 or KT1 prefixed String.
+# Tezos address. Represented as public key hash (Base58Check-encoded) prefixed with tz1, tz2, tz3 or KT1.
 scalar Address
 
 # Timestamp specified as a ISO-8601 UTC date string (2020-02-04T15:31:39Z)
@@ -18,12 +18,12 @@ schema {
 }
 
 type Query {
-    # Block fetches a Tezos block by number, hash or relative pointer (head~n).
+    # Block fetches a Tezos block by number, hash (Base58Check-encoded) or relative pointer (head~n).
     # If neither is supplied, the most recent known block (head) is returned.
     block(block: String): Block
 
     # Blocks returns all blocks in a given interval, but maximum of <count> elements.
-    # Hash, level, 'head' and 'head~n' notations are allowed.
+    # Hash (Base58Check-encoded), level, relative pointer (head~n) and head are allowed in the "from" a "to" arguments.
     # 
     # Example queries:
     # blocks(from: "head~4") {...}  # return last 5 blocks
@@ -34,19 +34,28 @@ type Query {
     blocks(from: String, to: String, count: Int): [Block!]!
 }
 
-# Tezos block
+# Tezos block. See https://tezos.gitlab.io/api/rpc.html#get-block-id
 type Block {
+    # Tezos protocol ID (Base58Check-encoded)
     protocol: String!
+
+    # The network identifier (Base58Check-encoded)
     chain_id: String!
+
+    # The block's unique identifier (Base58Check-encoded)
     hash: String!
+
+    # Associated header object.
     header: BlockHeader!
+
+    # Associated metadata object.
     metadata: BlockMetadata!
 
     # Returns the delegate with the given address, or null
-    delegate(address: Address): Delegate
+    delegate(address: Address!): Delegate
 
     # Returns the constants
-    constants: Constants
+    constants: Constants!
 
     # Returns the contract with the given address, or null
     contract(address: Address): Contract
@@ -92,6 +101,7 @@ type Block {
     transactions(hash: String, source: Address, destination: Address, status: OperationResultStatus): [Transaction!]!
 }
 
+# A block header. See https://tezos.gitlab.io/api/rpc.html#get-block-id-header
 type BlockHeader {
     level: Int!
     proto: Int!
@@ -107,6 +117,7 @@ type BlockHeader {
     signature: String!
 }
 
+# Block metadata. See https://tezos.gitlab.io/api/rpc.html#get-block-id-metadata
 type BlockMetadata {
     protocol: String!
     next_protocol: String!
@@ -124,20 +135,35 @@ type BlockMetadata {
     balance_updates: [BalanceUpdate!]
 }
 
+# Contains information about the block's level.
 type Level {
+    # The level of the block relative to genesis. This is also the Shell's notion of level
     level: Int!
+
+    # The level of the block relative to the block that starts protocol alpha
     level_position: Int!
+
+    # The current cycle's number. Note that cycles are a protocol-specific notion. As a result, the cycle number starts at 0 with the first block of protocol alpha.
     cycle: Int!
+
+    # The current level of the block relative to the first block of the current cycle.
     cycle_position: Int!
+
+    # The current voting period's index. Note that cycles are a protocol-specific notion. As a result, the voting period index starts at 0 with the first block of protocol alpha.
     voting_period: Int!
+
+    # The current level of the block relative to the first block of the current voting period.
     voting_period_position: Int!
+
+    # Tells whether the baker of this block has to commit a seed nonce hash.
     expected_commitment: Boolean!
 }
 
+# Status of the test chain
 type TestChainStatus {
+    # The status value: not_running (there is no test chain at the moment), forking (the test chain is being setup),
+    # running (the test chain is running).
     status: String!
-
-    # Note that Taquito misses other fields available on the RPC
 }
 
 type MaxOperationListLength {
@@ -156,15 +182,34 @@ enum BalanceUpdateCategory {
     REWARDS
 }
 
+# Everything about a delegate. See https://tezos.gitlab.io/api/rpc.html#get-block-id-context-delegates-pkh
 type Delegate {
+    # The full balance of a given delegate, including the frozen balances.
     balance: BigNumber!
+
+    # The total frozen balances of a given delegate, this includes the frozen deposits, rewards and fees.
     frozen_balance: BigNumber!
+
+    # Returns the frozen balances of a given delegate, indexed by the cycle by which it will be unfrozen.
     frozen_balance_by_cycle: [FrozenBalanceByCycle!]!
+
+    # The total amount of tokens delegated to a given delegate. This includes the balances of all the contracts that delegate to it,
+    # but also the balance of the delegate itself and its frozen fees and deposits. The rewards do not count in the delegated balance until they are unfrozen.
     staking_balance: BigNumber!
+
+    # The list of contracts that delegate to a given delegate.
     delegated_contracts: [String!]!
+
+    # The balances of all the contracts that delegate to a given delegate. This excludes the delegate's own balance and its frozen balances.
     delegated_balance: BigNumber!
+
+    # Tells whether the delegate is currently tagged as deactivated or not.
     deactivated: Boolean!
+
+    # The cycle by the end of which the delegate might be deactivated if she fails to execute any delegate action. A deactivated delegate might be reactivated
+    # (without loosing any rolls) by simply re-registering as a delegate. For deactivated delegates, this value contains the cycle by which they were deactivated.
     grace_period: Int!
+
     # Returns baking rights for a delegate or null. Results can be filtered by max_priority, level or cycle. If max_priority parameter is empty, server will default to the ENV value TEZOS_BAKING_RIGHTS_MAX_PRIORITY.
     baking_rights(max_priority: Int, level: [Int], cycle: [Int]): [BakingRight]
 
@@ -176,6 +221,8 @@ type BakingRight {
     level: Int!
     delegate: String!
     priority: Int!
+
+    # Omitted for levels in the past, and only an estimate for levels later that the next block, based on the hypothesis that all predecessor blocks were baked at the first priority.
     estimated_time: DateTime
 }
 
@@ -183,9 +230,12 @@ type EndorsingRight {
     level: Int!
     delegate: String!
     slots: [Int]!
+
+    # Omitted for levels in the past, and only an estimate for levels later that the next block, based on the hypothesis that all predecessor blocks were baked at the first priority.
     estimated_time: DateTime
 }
 
+# Frozen balance of a given delegate, indexed by the cycle by which it will be unfrozen
 type FrozenBalanceByCycle {
     cycle: Int!
     deposit: BigNumber!
@@ -193,6 +243,7 @@ type FrozenBalanceByCycle {
     rewards: BigNumber!
 }
 
+# All constants
 type Constants {
     proof_of_work_nonce_size: Int
     nonce_length: Int
@@ -229,14 +280,30 @@ type Constants {
     block_reward: BigNumber
 }
 
+# Information about a smart contract.
 type Contract {
+    # The unique address (public key hash).
     address: String!
+
+    # The balance of the contract.
     balance: BigNumber!
+
+    # Script belonging to the contract.
     script: ScriptedContracts
-    counter: String
+
+    # The counter of the contract, if any
+    counter: BigNumber
+
+    # Entrypoint information of the contract
     entrypoints: Entrypoints
+
+    # The delegate of the contract, if any
     delegate: String
+
+    # The manager of the contract.
     manager_key: ManagerKey
+
+    # Storage in Michelson format.
     storage: MichelsonExpression
 
     # Decoded version of the storage.
@@ -265,22 +332,33 @@ enum BigMapKeyType {
     KEY_HASH
 }
 
+# Manager of a contract.
 type ManagerKey {
+    # The public key
     key: String!
+
+    # Validity flag
     invalid: Boolean
 }
 
+# Information about entrypoints in a contract.
 type Entrypoints {
+    # List of entrypoints
     entrypoints: JSON!
-    unreachable: EntrypointUnreachable
+
+    unreachable: [EntrypointUnreachable!]
 }
 
 type EntrypointUnreachable {
     path: [String!]!
 }
 
+# Code and storage a contract
 type ScriptedContracts {
+    # The code of the script
     code: [MichelsonExpression!]!
+
+    # The current storage value in Michelson format
     storage: MichelsonExpression!
 }
 
@@ -582,3 +660,4 @@ type OperationError {
     kind: String!
     id: String!
 }
+
