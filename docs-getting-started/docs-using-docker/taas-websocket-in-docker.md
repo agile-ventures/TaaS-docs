@@ -32,6 +32,16 @@ docker run --rm -it -p 80:80 \
 tezoslive/agileventurestezpusherweb
 ```
 
+{% hint style="info" %}
+If you can't use the semicolon in the ENV variables \(for example in the Kubernetes\) you can also use double underscore as a deliminator. 
+
+```bash
+docker run --rm -it -p 80:80 \
+--env Tezos__NodeUrl="http://172.17.0.1:8732" \
+tezoslive/agileventurestezpusherweb
+```
+{% endhint %}
+
 ### Optional Configuration
 
 {% hint style="info" %}
