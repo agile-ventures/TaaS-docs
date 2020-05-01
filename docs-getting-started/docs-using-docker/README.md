@@ -1,5 +1,5 @@
 ---
-description: If you want to host your TaaS endpoint yourself in Docker.
+description: If you want to host your TaaS endpoint yourself using Docker.
 ---
 
 # Using Docker
