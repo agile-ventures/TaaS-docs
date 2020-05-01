@@ -14,5 +14,5 @@ TaaS provides real-time updates to various applications based on the events happ
 
 ### About TaaS GraphQL
 
-TaaS GraphQL provides GraphQL API interface to [Tezos Node RPC API](https://tezos.gitlab.io/api/rpc.html) based on [TZIP-14](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-14/tzip-14.md). 
+TaaS GraphQL provides GraphQL API interface to [Tezos Node RPC API](https://tezos.gitlab.io/api/rpc.html) implementing scalars defined in [TZIP-14](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-14/tzip-14.md). 
 
