@@ -4,7 +4,7 @@ Welcome to the technical documentation site for the TezosLive.io project!
 
 In this documentation you'll find information on:
 
-* [Tutorials ](docs-getting-started/docs-using-tezoslive.io-endpoint/)to get you started with TaaS \(Tezos as a Service\)
+* [Tutorials ](docs-getting-started/docs-using-tezoslive.io-endpoint/)to get you started with TezosLive.io hosted endpoints
 * An [overview ](./#how-to-use)of the different options you have when running TaaS WebSocket
 * [Sample clients](docs-sample-clients/docs-agileventures.tezpusher.sampleclient.md) for different usage options for TaaS WebSocket
 

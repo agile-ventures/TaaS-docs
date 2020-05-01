@@ -4,7 +4,7 @@ description: 'Most convenient option, no server side infrastructure needed.'
 
 # Using TezosLive.io Endpoints
 
-## Getting your TaaS Endpoints at TezosLive.io
+## etting your TaaS Endpoints at TezosLive.io
 
 {% hint style="danger" %}
 **Requirements**
