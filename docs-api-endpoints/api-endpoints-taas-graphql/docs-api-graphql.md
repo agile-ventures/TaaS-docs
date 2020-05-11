@@ -79,9 +79,9 @@ Example of the `GraphQL query object`
 
 ```graphql
 {
-  block(block: "884753") {
+  block(block: 884753) {
     protocol
-    chain_id
+    chainId
     hash
     header {
       level
@@ -90,4 +90,6 @@ Example of the `GraphQL query object`
   }
 }
 ```
+
+
 
