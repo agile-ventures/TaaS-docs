@@ -12,7 +12,7 @@ description: If you want to host your TaaS endpoint yourself in Docker.
 * Docker
 * Tezos Node with enabled RPC endpoint supporting following calls
   * _/monitor/heads/main_
-  * _/chains/main/blocks/hash_
+  * _/chains/main/blocks/{hash}_
 {% endhint %}
 
 Ready-to-use docker image is available from Docker Hub here: [https://hub.docker.com/r/tezoslive/agileventurestezpusherweb](https://hub.docker.com/r/tezoslive/agileventurestezpusherweb).
